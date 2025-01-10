@@ -16,4 +16,16 @@ I've been interested in getting into computer vision, so I created this project 
 - NumPy: For efficient numerical operations in image processing.
 
 You can test it out right now!
+Clone the repository:
+```sh
+git clone https://github.com/sreedharsreeram/virtual-keyboard
+```
+Install the required dependencies:
+```sh
+pip install -r requirements.txt
+```
+Run the code:
+```sh
+python main.py
+```
 
