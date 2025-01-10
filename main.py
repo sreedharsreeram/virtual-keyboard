@@ -3,6 +3,7 @@ import cvzone
 import numpy as np
 from time import sleep
 from cvzone.HandTrackingModule import HandDetector
+from pynput.keyboard import Controller, Key  # Fixed import for Key
 
 videocap = cv2.VideoCapture(0)
 videocap.set(3, 1280)
@@ -14,12 +15,14 @@ key = [
     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
-    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]
+    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "?"]
 ]
 
 inputText = ""
 max_chars = 15
 caps_lock = False
+keyboard = Controller()
+
 
 class Buttons:
     def __init__(self, pos, text, size=[65, 65]):
@@ -37,7 +40,9 @@ class Buttons:
         cv2.putText(img, self.text, (x + 15, y + 50), cv2.FONT_ITALIC, font_scale, (255, 255, 255), 3)
         return img
 
+
 buttonSet = []
+
 for row_index, row in enumerate(key):
     for col_index, letter in enumerate(row):
         button_pos = [80 * col_index + 15, 70 * row_index + 50]
@@ -87,6 +92,11 @@ while True:
                         length, _, _ = detector.findDistance((x_tip, y_tip), (x_mid, y_mid), img)
 
                         if length is not None and length < 30 and not key_pressed:
+                            if button.text == "SPACE":
+                                keyboard.press(Key.space)  # Use Key.space for spacebar
+                            else:
+                                keyboard.press(button.text)
+
                             if button.text == "DEL" and len(inputText) > 0:
                                 inputText = inputText[:-1]
                             elif button.text == "SPACE":
@@ -98,6 +108,7 @@ while True:
                                     inputText += button.text.upper()
                                 else:
                                     inputText += button.text.lower()
+
                             button.drawbutton(img, color=(255, 0, 0))
                             key_pressed = True
                             sleep(0.15)
