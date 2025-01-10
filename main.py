@@ -3,9 +3,8 @@ import cvzone
 import numpy as np
 from time import sleep
 from cvzone.HandTrackingModule import HandDetector
+
 from pynput.keyboard import Controller, Key
-
-
 videocap = cv2.VideoCapture(0)
 videocap.set(3, 1280)
 videocap.set(4, 720)
