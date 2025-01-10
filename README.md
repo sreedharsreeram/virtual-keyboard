@@ -16,4 +16,4 @@ I've been interested in getting into computer vision, so I created this project 
 - NumPy: For efficient numerical operations in image processing.
 
 You can test it out right now!
-~git clone https://github.com/YourUsername/Virtual-Keyboard-2.0.git
+
