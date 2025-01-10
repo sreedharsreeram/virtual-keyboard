@@ -1,4 +1,6 @@
 import cv2
+import cvzone
+import numpy as np
 from time import sleep
 from cvzone.HandTrackingModule import HandDetector
 
@@ -31,7 +33,10 @@ class Buttons:
     def drawbutton(self, img, color=(0, 0, 0)):
         x, y = self.pos
         w, h = self.size
-        cv2.rectangle(img, self.pos, (x + w, y + h), color, cv2.FILLED)
+        # Use a semi-transparent color (with alpha blending) instead of solid fill
+        overlay = img.copy()
+        cv2.rectangle(overlay, self.pos, (x + w, y + h), color, cv2.FILLED)
+        cv2.addWeighted(overlay, 0.3, img, 0.7, 0, img)  # Apply transparency
         font_scale = 1.5 if self.text != "DEL" else 1.2  # Adjust font size for "DEL"
         cv2.putText(img, self.text, (x + 15, y + 50), cv2.FONT_ITALIC, font_scale, (255, 255, 255), 3)
         return img
