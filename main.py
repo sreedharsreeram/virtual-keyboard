@@ -3,8 +3,11 @@ import cvzone
 import numpy as np
 from time import sleep
 from cvzone.HandTrackingModule import HandDetector
-
 from pynput.keyboard import Controller, Key
+
+
+
+
 videocap = cv2.VideoCapture(0)
 videocap.set(3, 1280)
 videocap.set(4, 720)
@@ -95,18 +98,19 @@ try:
 
                             if length is not None and length < 30 and not key_pressed:
                                 if button.text == "SPACE":
+                                    print("SPACE key pressed")
                                     keyboard.press(Key.space)
                                 elif button.text == "DEL":
+                                    print("DEL key pressed")
                                     keyboard.press(Key.backspace)
                                 elif button.text == "CAPS":
-
+                                    print("CAPS key toggled")
                                     caps_lock = not caps_lock
                                 elif button.text != "DEL" and len(inputText) < max_chars:
-
-                                    if caps_lock:
-                                        inputText += button.text.upper()
-                                    else:
-                                        inputText += button.text.lower()
+                                    key_to_press = button.text.upper() if caps_lock else button.text.lower()
+                                    print(f"Key pressed: {key_to_press}")
+                                    inputText += key_to_press
+                                    keyboard.type(key_to_press)
 
                                 button.drawbutton(img, color=(255, 0, 0))
                                 key_pressed = True
